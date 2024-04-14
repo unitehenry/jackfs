@@ -1,11 +1,53 @@
 class FileSystem {
-  function void init() {
+
+  field Directory current_dir;
+
+  constructor FileSystem new(String root_dir) {
+    let current_dir = Directory.new(root_dir);
+    return this;
+  }
+
+  method void mkdir(String command) {
+    var String dir_name;
+    var Directory new_dir;
+    let dir_name = StringUtil.slice(command, 6);
+    if (dir_name.length() = 0) {
+      return;
+    }
+    let new_dir = Directory.new(dir_name);
+    do current_dir.addDir(new_dir);
+    return;
+  }
+
+  method void handleCommand(String command) {
+    if (StringUtil.startsWith(command, "MKDIR ")) {
+      do mkdir(command);
+      return;
+    }
+    if (StringUtil.isEqual(command, "LS")) {
+      if (~(current_dir.getCount() = 0)) {
+        do current_dir.listDirectories();
+      }
+      return;
+    }
+    if (StringUtil.isEqual(command, "CLEAR")) {
+      do Screen.clearScreen();
+      do Output.moveCursor(0, 0);
+      return;
+    }
+    if (~StringUtil.isEqual(command, "EXIT")) {
+      do Output.printString("Command not found");
+      do Output.println();
+    }
+    return;
+  }
+
+  method void start() {
     var String command;
     let command = "";
     while (~StringUtil.isEqual(command, "EXIT")) {
       let command = Keyboard.readLine("$ ");
-      do Output.printString(command);
-      do Output.println();
+      do handleCommand(command);
     }
     return;
   }

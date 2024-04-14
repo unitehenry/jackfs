@@ -1,0 +1,52 @@
+class Directory {
+
+  field String dir_name;
+  field int dir_count;
+
+  field Array directories;
+
+  constructor Directory new(String name) {
+    let dir_name = name;
+    let dir_count = 0;
+    let directories = Array.new(dir_count + 1);
+    return this;
+  }
+
+  method String getName() {
+    return dir_name;
+  }
+
+  method int getCount() {
+    return dir_count;
+  }
+
+  method void addDir(Directory dir) {
+    var Array new_directories;
+    var int counter;
+    let counter = 0;
+    let dir_count = dir_count + 1;
+    let new_directories = Array.new(dir_count);
+    while (counter < (dir_count - 1)) {
+      let new_directories[counter] = directories[0];
+      let counter = counter + 1;
+    }
+    let new_directories[dir_count - 1] = dir;
+    do directories.dispose();
+    let directories = new_directories;
+    return;
+  }
+
+  method void listDirectories() {
+    var int counter;
+    var Directory current_dir;
+    let counter = 0;
+    while (counter < dir_count) {
+      let current_dir = directories[counter];
+      do Output.printString(current_dir.getName());
+      do Output.println();
+      let counter = counter + 1;
+    }
+    return;
+  }
+
+}

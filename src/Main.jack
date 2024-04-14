@@ -1,6 +1,8 @@
 class Main {
   function void main() {
-    do FileSystem.init();
+    var FileSystem fs;
+    let fs = FileSystem.new("root");
+    do fs.start();
     return;
   }
 }
