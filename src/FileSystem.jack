@@ -7,33 +7,28 @@ class FileSystem {
     return this;
   }
 
-  method void mkdir(String command) {
-    var String dir_name;
+  method void mkdir(String params) {
     var Directory new_dir;
-    let dir_name = StringUtil.slice(command, 6);
     if (dir_name.length() = 0) {
       return;
     }
-    let new_dir = Directory.new(dir_name);
+    let new_dir = Directory.new(params);
     do current_dir.addDir(new_dir);
     return;
   }
 
   method void handleCommand(String command) {
+    var String params;
     if (StringUtil.startsWith(command, "MKDIR ")) {
-      do mkdir(command);
-      return;
+      let params = StringUtil.slice(command, 6);
+      do mkdir(params);
     }
     if (StringUtil.isEqual(command, "LS")) {
-      if (~(current_dir.getCount() = 0)) {
-        do current_dir.listDirectories();
-      }
-      return;
+      do current_dir.listDirectories();
     }
     if (StringUtil.isEqual(command, "CLEAR")) {
       do Screen.clearScreen();
       do Output.moveCursor(0, 0);
-      return;
     }
     if (~StringUtil.isEqual(command, "EXIT")) {
       do Output.printString("Command not found");

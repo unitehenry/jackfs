@@ -39,6 +39,9 @@ class Directory {
   method void listDirectories() {
     var int counter;
     var Directory current_dir;
+    if (dir_count = 0) {
+      return;
+    }
     let counter = 0;
     while (counter < dir_count) {
       let current_dir = directories[counter];
