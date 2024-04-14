@@ -1,0 +1,18 @@
+class StringUtil {
+  function boolean isEqual(String a, String b) {
+    var int counter;
+    var boolean isEqual;
+    if (~(a.length() = b.length())) {
+      return false;
+    }
+    let isEqual = true;
+    let counter = 0;
+    while (counter < a.length()) {
+      if (~(a.charAt(counter) = b.charAt(counter))) {
+        let isEqual = false;
+      }
+      let counter = counter + 1;
+    }
+    return isEqual;
+  }
+}

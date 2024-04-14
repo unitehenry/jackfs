@@ -1,0 +1,12 @@
+class FileSystem {
+  function void init() {
+    var String command;
+    let command = "";
+    while (~StringUtil.isEqual(command, "EXIT")) {
+      let command = Keyboard.readLine("$ ");
+      do Output.printString(command);
+      do Output.println();
+    }
+    return;
+  }
+}
