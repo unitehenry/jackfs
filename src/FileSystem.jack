@@ -9,11 +9,23 @@ class FileSystem {
 
   method void mkdir(String params) {
     var Directory new_dir;
-    if (dir_name.length() = 0) {
+    if (params.length() = 0) {
       return;
     }
     let new_dir = Directory.new(params);
     do current_dir.addDir(new_dir);
+    return;
+  }
+
+  method void rmdir(String params) {
+    if (params.length() = 0) {
+      return;
+    }
+    if (~current_dir.hasDirectory(params)) {
+      do Output.printString("Directory does not exists");
+      do Output.println();
+      return;
+    }
     return;
   }
 
@@ -22,13 +34,21 @@ class FileSystem {
     if (StringUtil.startsWith(command, "MKDIR ")) {
       let params = StringUtil.slice(command, 6);
       do mkdir(params);
+      return;
+    }
+    if (StringUtil.startsWith(command, "RMDIR ")) {
+      let params = StringUtil.slice(command, 6);
+      do rmdir(params);
+      return;
     }
     if (StringUtil.isEqual(command, "LS")) {
       do current_dir.listDirectories();
+      return;
     }
     if (StringUtil.isEqual(command, "CLEAR")) {
       do Screen.clearScreen();
       do Output.moveCursor(0, 0);
+      return;
     }
     if (~StringUtil.isEqual(command, "EXIT")) {
       do Output.printString("Command not found");

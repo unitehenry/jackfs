@@ -20,6 +20,22 @@ class Directory {
     return dir_count;
   }
 
+  method boolean hasDirectory(String child_name) {
+    var Directory current_directory;
+    var boolean has_directory;
+    var int counter;
+    let counter = 0;
+    let has_directory = false;
+    while (counter < dir_count) {
+      let current_directory = directories[counter];
+      if (StringUtil.isEqual(current_directory.getName(), child_name)) {
+        let has_directory = true;
+      }
+      let counter = counter + 1;
+    }
+    return has_directory;
+  }
+
   method void addDir(Directory dir) {
     var Array new_directories;
     var int counter;
