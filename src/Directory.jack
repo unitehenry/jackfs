@@ -52,6 +52,29 @@ class Directory {
     return;
   }
 
+  method void removeDir(String rmdir_name) {
+    var Array new_directories;
+    var Directory current_dir;
+    var int counter;
+    let counter = 0;
+    let dir_count = dir_count - 1;
+    if (dir_count < 1) {
+      let new_directories = Array.new(1);
+    } else {
+      let new_directories = Array.new(dir_count);
+    }
+    while (counter < (dir_count - 1)) {
+      let current_dir = directories[counter];
+      if (~StringUtil.isEqual(current_dir.getName(), rmdir_name)) {
+        let new_directories[counter] = current_dir;
+      }
+      let counter = counter + 1;
+    }
+    do directories.dispose();
+    let directories = new_directories;
+    return;
+  }
+
   method void listDirectories() {
     var int counter;
     var Directory current_dir;

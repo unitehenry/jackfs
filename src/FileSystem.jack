@@ -12,6 +12,11 @@ class FileSystem {
     if (params.length() = 0) {
       return;
     }
+    if (current_dir.hasDirectory(params)) {
+      do Output.printString("Directory already exists");
+      do Output.println();
+      return;
+    }
     let new_dir = Directory.new(params);
     do current_dir.addDir(new_dir);
     return;
@@ -26,6 +31,7 @@ class FileSystem {
       do Output.println();
       return;
     }
+    do current_dir.removeDir(params);
     return;
   }
 
