@@ -36,6 +36,10 @@ class Directory {
     return has_parent;
   }
 
+  method Director getParentDir() {
+    return parent_dir;
+  }
+
   method boolean hasDirectory(String child_name) {
     var Directory current_directory;
     var boolean has_directory;

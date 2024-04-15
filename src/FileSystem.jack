@@ -39,6 +39,12 @@ class FileSystem {
     if (params.length() = 0) {
       return;
     }
+    if (current_dir.hasParent()) {
+      if (StringUtil.isEqual(params, "..")) {
+        let current_dir = current_dir.getParentDir();
+        return;
+      }
+    }
     if (~current_dir.hasDirectory(params)) {
       do Output.printString("Directory does not exists");
       do Output.println();
