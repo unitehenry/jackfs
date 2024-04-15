@@ -1,5 +1,5 @@
 main:
-	sh tools/JackCompiler.sh src
+	sh tools/JackCompiler.sh source
 
 clean:
-	rm src/*.vm
+	rm source/*.vm
