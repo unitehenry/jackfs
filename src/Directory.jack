@@ -152,6 +152,7 @@ class Directory {
   method void listDir() {
     var int counter;
     var Directory current_dir;
+    var File current_file;
     if (has_parent) {
       do Output.printString("..");
       do Output.println();
@@ -160,6 +161,13 @@ class Directory {
     while (counter < dir_count) {
       let current_dir = directories[counter];
       do Output.printString(current_dir.getName());
+      do Output.println();
+      let counter = counter + 1;
+    }
+    let counter = 0;
+    while (counter < file_count) {
+      let current_file = files[counter];
+      do Output.printString(current_file.getName());
       do Output.println();
       let counter = counter + 1;
     }
