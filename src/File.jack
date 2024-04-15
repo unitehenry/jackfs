@@ -1,0 +1,14 @@
+class File {
+
+  field String name;
+
+  constructor File new(String filename) {
+    let name = filename;
+    return this;
+  }
+
+  method String getName() {
+    return name;
+  }
+
+}

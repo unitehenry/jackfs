@@ -2,15 +2,20 @@ class Directory {
 
   field String dir_name;
   field int dir_count;
+  field int file_count;
+
   field boolean has_parent;
   field Directory parent_dir;
 
   field Array directories;
+  field Array files;
 
   constructor Directory new(String name) {
     let dir_name = name;
     let dir_count = 0;
+    let file_count = 0;
     let directories = Array.new(dir_count + 1);
+    let files = Array.new(file_count + 1);
     let has_parent = false;
     return this;
   }
@@ -18,7 +23,9 @@ class Directory {
   constructor Directory child(String name, Directory parent) {
     let dir_name = name;
     let dir_count = 0;
+    let file_count = 0;
     let directories = Array.new(dir_count + 1);
+    let files = Array.new(file_count + 1);
     let has_parent = true;
     let parent_dir = parent;
     return this;
@@ -29,7 +36,7 @@ class Directory {
   }
 
   method int getCount() {
-    return dir_count;
+    return dir_count + file_count;
   }
 
   method boolean hasParent() {
@@ -108,6 +115,38 @@ class Directory {
       let counter = counter + 1;
     }
     return found_dir;
+  }
+
+  method boolean hasFile(String filename) {
+    var File current_file;
+    var boolean has_file;
+    var int counter;
+    let counter = 0;
+    let has_file = false;
+    while (counter < file_count) {
+      let current_file = files[counter];
+      if (StringUtil.isEqual(current_file.getName(), filename)) {
+        let has_file = true;
+      }
+      let counter = counter + 1;
+    }
+    return has_file;
+  }
+
+  method void addFile(File file) {
+    var Array new_files;
+    var int counter;
+    let counter = 0;
+    let file_count = file_count + 1;
+    let new_files = Array.new(file_count);
+    while (counter < (file_count - 1)) {
+      let new_files[counter] = files[0];
+      let counter = counter + 1;
+    }
+    let new_files[file_count - 1] = file;
+    do files.dispose();
+    let files = new_files;
+    return;
   }
 
   method void listDir() {

@@ -61,8 +61,28 @@ class FileSystem {
     return;
   }
 
+  method void touch(String params) {
+    var File new_file;
+    if (params.length() = 0) {
+      return;
+    }
+    if (current_directory.hasFile(params)) {
+      do Output.printString("File already exists");
+      do Output.println();
+      return;
+    }
+    let new_file = File.new(params);
+    do current_dir.addFile(new_file);
+    return;
+  }
+
   method void handleCommand(String command) {
     var String params;
+    if (StringUtil.startsWith(command, "TOUCH ")) {
+      let params = StringUtil.slice(command, 6);
+      do touch(params);
+      return;
+    }
     if (StringUtil.startsWith(command, "MKDIR ")) {
       let params = StringUtil.slice(command, 6);
       do mkdir(params);
