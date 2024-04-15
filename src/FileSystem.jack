@@ -17,7 +17,7 @@ class FileSystem {
       do Output.println();
       return;
     }
-    let new_dir = Directory.new(params);
+    let new_dir = Directory.child(params, current_dir);
     do current_dir.addDir(new_dir);
     return;
   }
@@ -35,6 +35,19 @@ class FileSystem {
     return;
   }
 
+  method void cd(String params) {
+    if (params.length() = 0) {
+      return;
+    }
+    if (~current_dir.hasDirectory(params)) {
+      do Output.printString("Directory does not exists");
+      do Output.println();
+      return;
+    }
+    let current_dir = current_dir.getDir(params);
+    return;
+  }
+
   method void handleCommand(String command) {
     var String params;
     if (StringUtil.startsWith(command, "MKDIR ")) {
@@ -47,8 +60,13 @@ class FileSystem {
       do rmdir(params);
       return;
     }
+    if (StringUtil.startsWith(command, "CD ")) {
+      let params = StringUtil.slice(command, 3);
+      do cd(params);
+      return;
+    }
     if (StringUtil.isEqual(command, "LS")) {
-      do current_dir.listDirectories();
+      do current_dir.listDir();
       return;
     }
     if (StringUtil.isEqual(command, "CLEAR")) {

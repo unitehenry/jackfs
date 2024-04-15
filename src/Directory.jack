@@ -2,6 +2,8 @@ class Directory {
 
   field String dir_name;
   field int dir_count;
+  field boolean has_parent;
+  field Directory parent_dir;
 
   field Array directories;
 
@@ -9,6 +11,16 @@ class Directory {
     let dir_name = name;
     let dir_count = 0;
     let directories = Array.new(dir_count + 1);
+    let has_parent = false;
+    return this;
+  }
+
+  constructor Directory child(String name, Directory parent) {
+    let dir_name = name;
+    let dir_count = 0;
+    let directories = Array.new(dir_count + 1);
+    let has_parent = true;
+    let parent_dir = parent;
     return this;
   }
 
@@ -18,6 +30,10 @@ class Directory {
 
   method int getCount() {
     return dir_count;
+  }
+
+  method boolean hasParent() {
+    return has_parent;
   }
 
   method boolean hasDirectory(String child_name) {
@@ -75,11 +91,27 @@ class Directory {
     return;
   }
 
-  method void listDirectories() {
+  method Directory getDir(String name) {
     var int counter;
     var Directory current_dir;
-    if (dir_count = 0) {
-      return;
+    var Directory found_dir;
+    let counter = 0;
+    while (counter < dir_count) {
+      let current_dir = directories[counter];
+      if (StringUtil.isEqual(current_dir.getName(), name)) {
+        let found_dir = current_dir;
+      }
+      let counter = counter + 1;
+    }
+    return found_dir;
+  }
+
+  method void listDir() {
+    var int counter;
+    var Directory current_dir;
+    if (has_parent) {
+      do Output.printString("..");
+      do Output.println();
     }
     let counter = 0;
     while (counter < dir_count) {
