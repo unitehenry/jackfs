@@ -76,11 +76,29 @@ class FileSystem {
     return;
   }
 
+  method void rm(String params) {
+    if (params.length() = 0) {
+      return;
+    }
+    if (~current_dir.hasFile(params)) {
+      do Output.printString("File does not exist");
+      do Output.println();
+      return;
+    }
+    do current_dir.removeFile(params);
+    return;
+  }
+
   method void handleCommand(String command) {
     var String params;
     if (StringUtil.startsWith(command, "TOUCH ")) {
       let params = StringUtil.slice(command, 6);
       do touch(params);
+      return;
+    }
+    if (StringUtil.startsWith(command, "RM ")) {
+      let params = StringUtil.slice(command, 3);
+      do rm(params);
       return;
     }
     if (StringUtil.startsWith(command, "MKDIR ")) {

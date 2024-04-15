@@ -149,6 +149,29 @@ class Directory {
     return;
   }
 
+  method void removeFile(String filename) {
+    var Array new_files;
+    var File current_file;
+    var int counter;
+    let counter = 0;
+    let file_count = file_count - 1;
+    if (file_count < 1) {
+      let new_files = Array.new(1);
+    } else {
+      let new_files = Array.new(file_count);
+    }
+    while (counter < (file_count - 1)) {
+      let current_file = files[counter];
+      if (~StringUtil.isEqual(current_file.getName(), filename)) {
+        let new_files[counter] = current_file;
+      }
+      let counter = counter + 1;
+    }
+    do files.dispose();
+    let files = new_files;
+    return;
+  }
+
   method void listDir() {
     var int counter;
     var Directory current_dir;
