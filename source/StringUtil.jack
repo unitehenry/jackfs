@@ -1,0 +1,55 @@
+class StringUtil {
+  /** Returns if string a equals string b */
+  function boolean isEqual(String a, String b) {
+    var int counter;
+    var boolean isEqual;
+    if (~(a.length() = b.length())) {
+      return false;
+    }
+    let isEqual = true;
+    let counter = 0;
+    while (counter < a.length()) {
+      if (~(a.charAt(counter) = b.charAt(counter))) {
+        let isEqual = false;
+      }
+      let counter = counter + 1;
+    }
+    return isEqual;
+  }
+
+  /** Returns if string a starts with string b */
+  function boolean startsWith(String a, String b) {
+    var int counter;
+    var boolean startsWith;
+    if (b.length() > a.length()) {
+      return false;
+    }
+    let startsWith = true;
+    let counter = 0;
+    while (counter < b.length()) {
+      if (~(a.charAt(counter) = b.charAt(counter))) {
+        let startsWith = false;
+      }
+      let counter = counter + 1;
+    }
+    return startsWith;
+  }
+
+  /** Returns string a without after count */
+  function String slice(String a, int count) {
+    var int counter;
+    var String slice;
+    if (a.length() < count) {
+      return a;
+    }
+    let slice = String.new(a.length());
+    let counter = 0;
+    while(counter < a.length()) {
+      if (counter > (count - 1)) {
+        do slice.appendChar(a.charAt(counter));
+      }
+      let counter = counter + 1;
+    }
+    return slice;
+  }
+}

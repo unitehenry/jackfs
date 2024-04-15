@@ -1,0 +1,144 @@
+class FileSystem {
+
+  field Directory current_dir;
+
+  constructor FileSystem new(String root_dir) {
+    let current_dir = Directory.new(root_dir);
+    return this;
+  }
+
+  method void mkdir(String params) {
+    var Directory new_dir;
+    if (params.length() = 0) {
+      return;
+    }
+    if (current_dir.hasDirectory(params)) {
+      do Output.printString("Directory already exists");
+      do Output.println();
+      return;
+    }
+    let new_dir = Directory.child(params, current_dir);
+    do current_dir.addDir(new_dir);
+    return;
+  }
+
+  method void rmdir(String params) {
+    var Directory target_dir;
+    if (params.length() = 0) {
+      return;
+    }
+    if (~current_dir.hasDirectory(params)) {
+      do Output.printString("Directory does not exists");
+      do Output.println();
+      return;
+    }
+    let target_dir = current_dir.getDir(params);
+    if (target_dir.getCount() > 0) {
+      do Output.printString("Directory is not empty");
+      do Output.println();
+      return;
+    }
+    do current_dir.removeDir(params);
+    return;
+  }
+
+  method void cd(String params) {
+    if (params.length() = 0) {
+      return;
+    }
+    if (current_dir.hasParent()) {
+      if (StringUtil.isEqual(params, "..")) {
+        let current_dir = current_dir.getParentDir();
+        return;
+      }
+    }
+    if (~current_dir.hasDirectory(params)) {
+      do Output.printString("Directory does not exists");
+      do Output.println();
+      return;
+    }
+    let current_dir = current_dir.getDir(params);
+    return;
+  }
+
+  method void touch(String params) {
+    var File new_file;
+    if (params.length() = 0) {
+      return;
+    }
+    if (current_dir.hasFile(params)) {
+      do Output.printString("File already exists");
+      do Output.println();
+      return;
+    }
+    let new_file = File.new(params);
+    do current_dir.addFile(new_file);
+    return;
+  }
+
+  method void rm(String params) {
+    if (params.length() = 0) {
+      return;
+    }
+    if (~current_dir.hasFile(params)) {
+      do Output.printString("File does not exist");
+      do Output.println();
+      return;
+    }
+    do current_dir.removeFile(params);
+    return;
+  }
+
+  method void handleCommand(String command) {
+    var String params;
+    if (StringUtil.startsWith(command, "TOUCH ")) {
+      let params = StringUtil.slice(command, 6);
+      do touch(params);
+      return;
+    }
+    if (StringUtil.startsWith(command, "RM ")) {
+      let params = StringUtil.slice(command, 3);
+      do rm(params);
+      return;
+    }
+    if (StringUtil.startsWith(command, "MKDIR ")) {
+      let params = StringUtil.slice(command, 6);
+      do mkdir(params);
+      return;
+    }
+    if (StringUtil.startsWith(command, "RMDIR ")) {
+      let params = StringUtil.slice(command, 6);
+      do rmdir(params);
+      return;
+    }
+    if (StringUtil.startsWith(command, "CD ")) {
+      let params = StringUtil.slice(command, 3);
+      do cd(params);
+      return;
+    }
+    if (StringUtil.isEqual(command, "LS")) {
+      do current_dir.listDir();
+      return;
+    }
+    if (StringUtil.isEqual(command, "CLEAR")) {
+      do Screen.clearScreen();
+      do Output.moveCursor(0, 0);
+      return;
+    }
+    if (~StringUtil.isEqual(command, "EXIT")) {
+      do Output.printString("Command not found");
+      do Output.println();
+    }
+    return;
+  }
+
+  method void start() {
+    var String command;
+    let command = "";
+    while (~StringUtil.isEqual(command, "EXIT")) {
+      let command = Keyboard.readLine("$ ");
+      do handleCommand(command);
+    }
+    return;
+  }
+}
